@@ -31,6 +31,7 @@
     "cookie-parser": "1.4.1",
     "express": "4.13.4",
     "express-session": "1.13.0",
+    "isomorphic-fetch": "2.2.1",
     "react": "0.14.7",
     "react-dom": "0.14.7",
     "react-redux": "4.1.2",
