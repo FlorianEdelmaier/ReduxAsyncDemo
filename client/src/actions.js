@@ -1,4 +1,5 @@
 import * as consts from './constants';
+import fetch from 'isomorphic-fetch';
 
 function requestLogin(creds) {
   return {
@@ -27,12 +28,13 @@ function errorLogin(message) {
 }
 
 export function loginUser(creds) {
+    console.log(creds);
     let config = {
         method: 'POST',
         headers: { 'Content-Type':'application/x-www-form-urlencoded'},
-        body: `username=${cred.username}&password=${creds.password}`
+        body: `username=${creds.username}&password=${creds.password}`
     };
-    return dispatch => {
+    return (dispatch) => {
         dispatch(requestLogin(creds));
 
         return fetch('http://localhost:2000/api/login', config)
