@@ -32,6 +32,8 @@ class Login extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log("CONTAINER:");
+    console.log(state);
     return {
       isAuthenticated: false
     }

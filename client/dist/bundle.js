@@ -20975,6 +20975,7 @@
 	            return Object.assign({}, state, {
 	                isFetching: false,
 	                isAuthenticated: true,
+	                user: action.user,
 	                errorMessage: ''
 	            });
 	        case consts.LOGIN_FAILURE:
@@ -26154,6 +26155,8 @@
 	}(_react2.default.Component);
 
 	var mapStateToProps = function mapStateToProps(state) {
+	    console.log("CONTAINER:");
+	    console.log(state);
 	    return {
 	        isAuthenticated: false
 	    };
@@ -26214,7 +26217,8 @@
 	    return {
 	        type: consts.LOGIN_SUCCESS,
 	        isFetching: false,
-	        isAuthenticated: true
+	        isAuthenticated: true,
+	        user: user
 	    };
 	}
 

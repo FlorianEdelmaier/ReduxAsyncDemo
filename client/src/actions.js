@@ -17,7 +17,8 @@ function receiveLogin(user) {
     return {
         type: consts.LOGIN_SUCCESS,
         isFetching: false,
-        isAuthenticated: true
+        isAuthenticated: true,
+        user: user
     };
 }
 
