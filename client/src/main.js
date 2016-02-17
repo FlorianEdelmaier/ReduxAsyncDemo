@@ -6,8 +6,6 @@ import thunkMiddleware from 'redux-thunk';
 import reducer from './reducers';
 import AppRouter from './Components/AppRouter';
 
-// let createStoreWithMiddleware = applyMiddleware(thunkMiddleware)(createStore);
-// let store = createStoreWithMiddleware(reducer);
 let store = createStore(reducer, applyMiddleware(thunkMiddleware));
 
 ReactDom.render(<Provider store={store}><AppRouter /></Provider>, document.getElementById('app'));

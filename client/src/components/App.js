@@ -1,5 +1,5 @@
 import React from 'react';
-import connect from 'react-redux';
+import { connect } from 'react-redux';
 import Login from './Login';
 import { loginUser } from './../actions';
 
@@ -9,18 +9,12 @@ class App extends React.Component {
         console.log(this.props);
         return (
             <div>
-                <Login onLoginClick={cred => dispatch(loginUser(cred))} />
+                <Login />
                 <h1>Test</h1>
             </div>
         );
     }
 }
 
-function select(state) {
-    return {
-        isAuthenticated: false,
-        user: {}
-    };
-}
-
-export default connect(select)(App);
+export default App;
+// export default connect(mapStateToProps, mapDispatchToProps)(Login);

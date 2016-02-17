@@ -8,12 +8,14 @@ const defaultAuthState = {
 function auth(state = defaultAuthState, action) {
     switch (action.type) {
         case consts.LOGIN_REQUEST:
+            console.log("RED: LOGIN REQ");
             return Object.assign({}, state, {
                 isFetching: true,
                 isAuthenticated: false,
                 user: action.creds
             });
-        case consts.LOGIN_SUCCES:
+        case consts.LOGIN_SUCCESS:
+            console.log("RED: LOGIN SUC");
             return Object.assign({}, state, {
                 isFetching: false,
                 isAuthenticated: true,

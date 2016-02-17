@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { loginUser } from './../actions';
 
 class Login extends React.Component {
     constructor(props) {
@@ -29,8 +31,23 @@ class Login extends React.Component {
     }
 }
 
-Login.propTypes = {
-    onLoginClick: React.PropTypes.func.isRequired
+const mapStateToProps = (state) => {
+    return {
+      isAuthenticated: false
+    }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onLoginClick: (cred) => {
+      dispatch(loginUser(cred));
+    }
+  }
+}
+
+// Login.propTypes = {
+//     isAuthenticated: React.PropTypes.bool.isRequired,
+//     onLoginClick: React.PropTypes.func.isRequired
+// }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
