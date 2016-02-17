@@ -7,7 +7,11 @@ class Login extends React.Component {
         super(props);
         this.state = {
             userName: '',
-            pwd: ''
+            pwd: '',
+            user: {
+              firstName: '',
+              lastName: ''
+            }
         };
     }
     onUserNameChange(ev) {
@@ -26,6 +30,8 @@ class Login extends React.Component {
                 <input type='text' placeholder='Username' onChange={(e) => this.onUserNameChange(e)} />
                 <input type='text' placeholder='Password' onChange={(e) => this.onPwdChange(e)} />
                 <button onClick={() => this.handleButtonClick()}>Login</button>
+                <br />
+                <span>{this.state.user.firstName + " " + this.state.user.lastName}</span>
             </div>
         );
     }
@@ -35,7 +41,8 @@ const mapStateToProps = (state) => {
     console.log("CONTAINER:");
     console.log(state);
     return {
-      isAuthenticated: false
+      isAuthenticated: state.isAuthenticated,
+      user: state.user
     }
 }
 

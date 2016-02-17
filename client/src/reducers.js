@@ -2,7 +2,9 @@ import * as consts from './constants';
 
 const defaultAuthState = {
     isFetching: false,
-    isAuthenticated: false
+    isAuthenticated: false,
+    user: { firstName: '', lastName: '' },
+    errorMessage: ''
 }
 
 function auth(state = defaultAuthState, action) {
@@ -12,7 +14,6 @@ function auth(state = defaultAuthState, action) {
             return Object.assign({}, state, {
                 isFetching: true,
                 isAuthenticated: false,
-                user: action.creds
             });
         case consts.LOGIN_SUCCESS:
             console.log("RED: LOGIN SUC");

@@ -20941,7 +20941,7 @@
 /* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -20955,7 +20955,9 @@
 
 	var defaultAuthState = {
 	    isFetching: false,
-	    isAuthenticated: false
+	    isAuthenticated: false,
+	    user: { firstName: '', lastName: '' },
+	    errorMessage: ''
 	};
 
 	function auth() {
@@ -20967,8 +20969,7 @@
 	            console.log("RED: LOGIN REQ");
 	            return Object.assign({}, state, {
 	                isFetching: true,
-	                isAuthenticated: false,
-	                user: action.creds
+	                isAuthenticated: false
 	            });
 	        case consts.LOGIN_SUCCESS:
 	            console.log("RED: LOGIN SUC");
@@ -26105,7 +26106,11 @@
 
 	        _this.state = {
 	            userName: '',
-	            pwd: ''
+	            pwd: '',
+	            user: {
+	                firstName: '',
+	                lastName: ''
+	            }
 	        };
 	        return _this;
 	    }
@@ -26146,6 +26151,12 @@
 	                            return _this2.handleButtonClick();
 	                        } },
 	                    'Login'
+	                ),
+	                _react2.default.createElement('br', null),
+	                _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    this.state.user.firstName + " " + this.state.user.lastName
 	                )
 	            );
 	        }
@@ -26158,7 +26169,8 @@
 	    console.log("CONTAINER:");
 	    console.log(state);
 	    return {
-	        isAuthenticated: false
+	        isAuthenticated: state.isAuthenticated,
+	        user: state.user
 	    };
 	};
 
