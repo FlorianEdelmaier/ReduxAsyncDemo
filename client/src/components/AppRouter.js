@@ -2,16 +2,12 @@ import React from 'react';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import App from './App';
 
-class AppRouter extends React.Component {
-    render() {
-        return (
-            <Router history={ hashHistory }>
-                <Route path="/" component={App}>
+const AppRouter = () => (
+    <Router history={ hashHistory }>
+        <Route path="/" component={App}>
 
-                </Route>
-            </Router>
-        )
-    }
-}
+        </Route>
+    </Router>
+)
 
 export default AppRouter;

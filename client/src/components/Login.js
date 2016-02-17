@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { loginUser } from './../actions';
+import UserName from './UserName';
 
 class Login extends React.Component {
     constructor(props) {
@@ -8,10 +9,6 @@ class Login extends React.Component {
         this.state = {
             userName: '',
             pwd: '',
-            user: {
-              firstName: '',
-              lastName: ''
-            }
         };
     }
     onUserNameChange(ev) {
@@ -30,8 +27,7 @@ class Login extends React.Component {
                 <input type='text' placeholder='Username' onChange={(e) => this.onUserNameChange(e)} />
                 <input type='text' placeholder='Password' onChange={(e) => this.onPwdChange(e)} />
                 <button onClick={() => this.handleButtonClick()}>Login</button>
-                <br />
-                <span>{this.state.user.firstName + " " + this.state.user.lastName}</span>
+                <UserName user={this.props.user} />
             </div>
         );
     }
