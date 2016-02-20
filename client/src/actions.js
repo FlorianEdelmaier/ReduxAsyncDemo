@@ -1,18 +1,17 @@
 import * as consts from './constants';
 import fetch from 'isomorphic-fetch';
 
-function requestLogin(creds) {
+export function requestLogin() {
 
   console.log("REQUEST LOGIN TRIGGERED");
   return {
     type: consts.LOGIN_REQUEST,
     isFetching: true,
     isAuthenticated: false,
-    credentials: creds
   };
 }
 
-function receiveLogin(user) {
+export function receiveLogin(user) {
     console.log("RECEIVE LOGIN TRIGGERED: " + user);
     return {
         type: consts.LOGIN_SUCCESS,
@@ -22,7 +21,7 @@ function receiveLogin(user) {
     };
 }
 
-function errorLogin(message) {
+export function errorLogin(message) {
     return {
         type: consts.LOGIN_FAILURE,
         isFetching: false,
