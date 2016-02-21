@@ -1,32 +1,68 @@
 import expect from 'expect';
 import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from './../src/constants';
-import { requestLogin, receiveLogin, errorLogin } from './../src/actions';
+import { loginRequest, loginSuccess, loginFailure, login } from './../src/actions';
+import nock from 'nock';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
 
 describe('ACTIONS:', () => {
-    describe('Request Login', () => {
+    describe('Login requested', () => {
         it('should return action object', () => {
-            let output = requestLogin();
-            let expected = { type: LOGIN_REQUEST, isFetching: true, isAuthenticated: false };
+            let output = loginRequest();
+            let expected = { type: LOGIN_REQUEST };
             expect(output).toEqual(expected);
         });
     });
-    describe('Receive Login', () => {
+    describe('Login success', () => {
         it('should return action object', () => {
-            let output = receiveLogin({firstName: 'x', lastName: 'y'});
-            let expected = { type: LOGIN_SUCCESS, isFetching: false, isAuthenticated: true, user: { firstName: 'x', lastName: 'y'}};
+            let output = loginSuccess({firstName: 'x', lastName: 'y'});
+            let expected = { type: LOGIN_SUCCESS, user: { firstName: 'x', lastName: 'y'}};
             expect(output).toEqual(expected);
         });
     });
-    describe('Error Login', () => {
+    describe('Login error', () => {
         it('should return action object', () => {
-            let output = errorLogin("wrong user");
-            let expected = { type: LOGIN_FAILURE, isFetching: false, isAuthenticated: false, message: "wrong user"};
+            let output = loginFailure("wrong user");
+            let expected = { type: LOGIN_FAILURE, message: "wrong user"};
             expect(output).toEqual(expected);
         });
     });
-    describe('Login User', () => {
-        it('should follow login workflow', () => {
-            expect(true).toEqual(true);
+    describe('Login', () => {
+        afterEach(() => {
+            nock.cleanAll();
+        });
+        describe('Login with valid credentials', () => {
+            it('should return user instance', (done) => {
+                let request = nock('http://localhost:2000')
+                    .post('/api/login')
+                    .reply(200, { user: {
+                            firstName: "abc",
+                            lastName: "def"
+                        }
+                    });
+                const expectedActions = [
+                    { type: LOGIN_REQUEST },
+                    { type: LOGIN_SUCCESS, user: { firstName: "abc", lastName: "def" } }
+                ];
+                const store = mockStore({ }, expectedActions, done);
+                store.dispatch(login({userName: 'x', password: 'y'}));
+            });
+        });
+        describe('Login with invalid credentials', () => {
+            it('should return error message', (done) => {
+                nock('http://localhost:2000')
+                    .post('/api/login')
+                    .replyWithError("wrong user");
+                const expectedActions = [
+                    { type: LOGIN_REQUEST },
+                    { type: LOGIN_FAILURE, message: "request to http://localhost:2000/api/login failed, reason: wrong user" }
+                ];
+                const store = mockStore({ }, expectedActions, done);
+                store.dispatch(login({userName: 'a', password: 'z'}));
+            });
         });
     });
 })

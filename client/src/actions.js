@@ -1,62 +1,51 @@
 import * as consts from './constants';
 import fetch from 'isomorphic-fetch';
 
-export function requestLogin() {
-
-  console.log("REQUEST LOGIN TRIGGERED");
+export function loginRequest() {
   return {
-    type: consts.LOGIN_REQUEST,
-    isFetching: true,
-    isAuthenticated: false,
+    type: consts.LOGIN_REQUEST
   };
 }
 
-export function receiveLogin(user) {
-    console.log("RECEIVE LOGIN TRIGGERED: " + user);
+export function loginSuccess(user) {
     return {
         type: consts.LOGIN_SUCCESS,
-        isFetching: false,
-        isAuthenticated: true,
         user: user
     };
 }
 
-export function errorLogin(message) {
+export function loginFailure(message) {
     return {
         type: consts.LOGIN_FAILURE,
-        isFetching: false,
-        isAuthenticated: false,
         message: message
     };
 }
 
 export function checkHttpStatus(response) {
     if (response.status >= 200 && response.status < 300) {
-        return response
+        return response;
     } else {
         var error = new Error(response.statusText)
         error.response = response
-        throw error
+        throw error;
     }
 }
 
-export function loginUser(creds) {
-    console.log(creds);
+export function login(creds) {
     let config = {
         method: 'POST',
         headers: { 'Content-Type':'application/x-www-form-urlencoded'},
         body: `username=${creds.username}&password=${creds.password}`
     };
     return (dispatch) => {
-        dispatch(requestLogin(creds));
+        dispatch(loginRequest(creds));
 
         return fetch('http://localhost:2000/api/login', config)
             .then(checkHttpStatus)
             .then(response => response.json())
             .then(response => {
-              console.log(response);
-              dispatch(receiveLogin(response.user));
+              dispatch(loginSuccess(response.user));
             })
-            .catch(err => console.log("ERROR: ", err));
+            .catch(err => { dispatch(loginFailure(err.message)); });
     }
 }

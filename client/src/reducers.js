@@ -1,4 +1,4 @@
-import * as consts from './constants';
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from './constants';
 
 const defaultAuthState = {
     isFetching: false,
@@ -9,24 +9,24 @@ const defaultAuthState = {
 
 function auth(state = defaultAuthState, action) {
     switch (action.type) {
-        case consts.LOGIN_REQUEST:
-            console.log("RED: LOGIN REQ");
+        case LOGIN_REQUEST:
             return Object.assign({}, state, {
                 isFetching: true,
                 isAuthenticated: false,
+                user: undefined,
+                errorMessage: ''
             });
-        case consts.LOGIN_SUCCESS:
-            console.log("RED: LOGIN SUC");
+        case LOGIN_SUCCESS:
             return Object.assign({}, state, {
                 isFetching: false,
                 isAuthenticated: true,
                 user: action.user,
-                errorMessage: ''
             });
-        case consts.LOGIN_FAILURE:
+        case LOGIN_FAILURE:
             return Object.assign({}, state, {
                 isFetching: false,
                 isAuthenticated: false,
+                user: undefined,
                 errorMessage: action.message
             });
         default:
