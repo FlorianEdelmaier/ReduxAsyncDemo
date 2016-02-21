@@ -1,9 +1,9 @@
 import React from 'react';
-import Login from './Login';
+import LoginContainer from './LoginContainer';
 
 const App = () => (
     <div>
-        <Login />
+        <LoginContainer />
         <h1>Test</h1>
     </div>
 )

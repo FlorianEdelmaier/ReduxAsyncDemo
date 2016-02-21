@@ -20963,10 +20963,6 @@
 
 	var _constants = __webpack_require__(181);
 
-	var consts = _interopRequireWildcard(_constants);
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
 	var defaultAuthState = {
 	    isFetching: false,
 	    isAuthenticated: false,
@@ -20979,24 +20975,24 @@
 	    var action = arguments[1];
 
 	    switch (action.type) {
-	        case consts.LOGIN_REQUEST:
-	            console.log("RED: LOGIN REQ");
+	        case _constants.LOGIN_REQUEST:
 	            return Object.assign({}, state, {
 	                isFetching: true,
-	                isAuthenticated: false
+	                isAuthenticated: false,
+	                user: undefined,
+	                errorMessage: ''
 	            });
-	        case consts.LOGIN_SUCCESS:
-	            console.log("RED: LOGIN SUC");
+	        case _constants.LOGIN_SUCCESS:
 	            return Object.assign({}, state, {
 	                isFetching: false,
 	                isAuthenticated: true,
-	                user: action.user,
-	                errorMessage: ''
+	                user: action.user
 	            });
-	        case consts.LOGIN_FAILURE:
+	        case _constants.LOGIN_FAILURE:
 	            return Object.assign({}, state, {
 	                isFetching: false,
 	                isAuthenticated: false,
+	                user: undefined,
 	                errorMessage: action.message
 	            });
 	        default:
@@ -26027,9 +26023,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Login = __webpack_require__(242);
-
-	var _Login2 = _interopRequireDefault(_Login);
+	var _LoginContainer = __webpack_require__(242);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26037,7 +26031,7 @@
 	    return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_Login2.default, null),
+	        _react2.default.createElement(_LoginContainer.LoginContainer, null),
 	        _react2.default.createElement(
 	            'h1',
 	            null,
@@ -26054,10 +26048,8 @@
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(1);
@@ -26068,101 +26060,30 @@
 
 	var _actions = __webpack_require__(243);
 
-	var _UserName = __webpack_require__(246);
+	var _Login = __webpack_require__(246);
 
-	var _UserName2 = _interopRequireDefault(_UserName);
+	var _Login2 = _interopRequireDefault(_Login);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Login = function (_React$Component) {
-	    _inherits(Login, _React$Component);
-
-	    function Login(props) {
-	        _classCallCheck(this, Login);
-
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Login).call(this, props));
-
-	        _this.state = {
-	            userName: '',
-	            pwd: ''
-	        };
-	        return _this;
-	    }
-
-	    _createClass(Login, [{
-	        key: 'onUserNameChange',
-	        value: function onUserNameChange(ev) {
-	            this.setState({ userName: ev.target.value });
-	        }
-	    }, {
-	        key: 'onPwdChange',
-	        value: function onPwdChange(ev) {
-	            this.setState({ pwd: ev.target.value });
-	        }
-	    }, {
-	        key: 'handleButtonClick',
-	        value: function handleButtonClick() {
-	            var credential = { username: this.state.userName, password: this.state.pwd };
-	            this.props.onLoginClick(credential);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this2 = this;
-
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement('input', { type: 'text', placeholder: 'Username', onChange: function onChange(e) {
-	                        return _this2.onUserNameChange(e);
-	                    } }),
-	                _react2.default.createElement('input', { type: 'text', placeholder: 'Password', onChange: function onChange(e) {
-	                        return _this2.onPwdChange(e);
-	                    } }),
-	                _react2.default.createElement(
-	                    'button',
-	                    { onClick: function onClick() {
-	                            return _this2.handleButtonClick();
-	                        } },
-	                    'Login'
-	                ),
-	                _react2.default.createElement(_UserName2.default, { user: this.props.user })
-	            );
-	        }
-	    }]);
-
-	    return Login;
-	}(_react2.default.Component);
-
 	var mapStateToProps = function mapStateToProps(state) {
-	    console.log("CONTAINER:");
-	    console.log(state);
-	    return {
-	        isAuthenticated: state.isAuthenticated,
-	        user: state.user
-	    };
+	  console.log("CONTAINER:");
+	  console.log(state);
+	  return {
+	    isAuthenticated: state.isAuthenticated,
+	    user: state.user
+	  };
 	};
 
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	    return {
-	        onLoginClick: function onLoginClick(cred) {
-	            dispatch((0, _actions.loginUser)(cred));
-	        }
-	    };
+	  return {
+	    onLoginClick: function onLoginClick(cred) {
+	      dispatch((0, _actions.login)(cred));
+	    }
+	  };
 	};
 
-	// Login.propTypes = {
-	//     isAuthenticated: React.PropTypes.bool.isRequired,
-	//     onLoginClick: React.PropTypes.func.isRequired
-	// }
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Login);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Login2.default);
 
 /***/ },
 /* 243 */
@@ -26193,17 +26114,13 @@
 
 	function loginRequest() {
 	    return {
-	        type: consts.LOGIN_REQUEST,
-	        isFetching: true,
-	        isAuthenticated: false
+	        type: consts.LOGIN_REQUEST
 	    };
 	}
 
 	function loginSuccess(user) {
 	    return {
 	        type: consts.LOGIN_SUCCESS,
-	        isFetching: false,
-	        isAuthenticated: true,
 	        user: user
 	    };
 	}
@@ -26211,8 +26128,6 @@
 	function loginFailure(message) {
 	    return {
 	        type: consts.LOGIN_FAILURE,
-	        isFetching: false,
-	        isAuthenticated: false,
 	        message: message
 	    };
 	}
@@ -26239,10 +26154,9 @@
 	        return (0, _isomorphicFetch2.default)('http://localhost:2000/api/login', config).then(checkHttpStatus).then(function (response) {
 	            return response.json();
 	        }).then(function (response) {
-	            console.log(response);
 	            dispatch(loginSuccess(response.user));
 	        }).catch(function (err) {
-	            return console.log("ERROR: ", err);
+	            dispatch(loginFailure(err.message));
 	        });
 	    };
 	}
@@ -26660,6 +26574,105 @@
 
 	'use strict';
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(159);
+
+	var _actions = __webpack_require__(243);
+
+	var _UserName = __webpack_require__(247);
+
+	var _UserName2 = _interopRequireDefault(_UserName);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Login = function (_React$Component) {
+	    _inherits(Login, _React$Component);
+
+	    function Login(props) {
+	        _classCallCheck(this, Login);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Login).call(this, props));
+
+	        _this.state = {
+	            userName: '',
+	            pwd: ''
+	        };
+	        return _this;
+	    }
+
+	    _createClass(Login, [{
+	        key: 'onUserNameChange',
+	        value: function onUserNameChange(ev) {
+	            this.setState({ userName: ev.target.value });
+	        }
+	    }, {
+	        key: 'onPwdChange',
+	        value: function onPwdChange(ev) {
+	            this.setState({ pwd: ev.target.value });
+	        }
+	    }, {
+	        key: 'handleButtonClick',
+	        value: function handleButtonClick() {
+	            var credential = { username: this.state.userName, password: this.state.pwd };
+	            this.props.onLoginClick(credential);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement('input', { type: 'text', placeholder: 'Username', onChange: function onChange(e) {
+	                        return _this2.onUserNameChange(e);
+	                    } }),
+	                _react2.default.createElement('input', { type: 'text', placeholder: 'Password', onChange: function onChange(e) {
+	                        return _this2.onPwdChange(e);
+	                    } }),
+	                _react2.default.createElement(
+	                    'button',
+	                    { onClick: function onClick() {
+	                            return _this2.handleButtonClick();
+	                        } },
+	                    'Login'
+	                ),
+	                _react2.default.createElement(_UserName2.default, { user: this.props.user })
+	            );
+	        }
+	    }]);
+
+	    return Login;
+	}(_react2.default.Component);
+
+	Login.propTypes = {
+	    isAuthenticated: _react2.default.PropTypes.bool.isRequired,
+	    onLoginClick: _react2.default.PropTypes.func.isRequired
+	};
+
+	exports.default = Login;
+
+/***/ },
+/* 247 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
@@ -26675,9 +26688,9 @@
 	    return _react2.default.createElement(
 	        'h3',
 	        null,
-	        user.firstName,
+	        user ? user.firstName : '',
 	        ' ',
-	        user.lastName
+	        user ? user.lastName : ''
 	    );
 	};
 
