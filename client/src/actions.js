@@ -49,3 +49,8 @@ export function login(creds) {
             .catch(err => { dispatch(loginFailure(err.message)); });
     }
 }
+
+
+export function setCredUserName(uname) {
+    
+}

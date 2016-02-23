@@ -1,8 +1,9 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from './constants';
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, CRED_USERNAME_SET, CRED_PWD_SET } from './constants';
 
 const defaultAuthState = {
     isFetching: false,
     isAuthenticated: false,
+    cred: { userName: '', pwd: '' },
     user: { firstName: '', lastName: '' },
     errorMessage: ''
 }
@@ -28,6 +29,14 @@ function auth(state = defaultAuthState, action) {
                 isAuthenticated: false,
                 user: undefined,
                 errorMessage: action.message
+            });
+        case CRED_USERNAME_SET:
+            return Object.assign({}, state, {
+                cred: { userName: action.userName }
+            });
+        case CRED_PWD_SET:
+            return Object.assign({}, state, {
+                cred: { pwd: action.pwd }
             });
         default:
             return state;
